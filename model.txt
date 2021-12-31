@@ -1,0 +1,15 @@
+User 
+    - Name
+    - email
+    - phone
+    - location
+    - avatar
+    - Like
+
+profile
+    - profile Name
+    - email
+    - skills
+    - role or access
+
+day 31
