@@ -48,7 +48,7 @@ function EditUser() {
             toast.success("Updated User");
             dispatch(updateUsers({ id, user }));
         } else {
-            console.log(updateUser);
+            toast.error(updateUser?.errors[0].message);
         }
     };
 

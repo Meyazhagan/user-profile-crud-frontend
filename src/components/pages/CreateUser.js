@@ -23,14 +23,14 @@ function CreateUser() {
                 user,
             },
         });
-        toast.success("User Created");
 
         if (error) console.log(error);
 
         if (createUser.ok) {
+            toast.success("User Created");
             dispatch(createUserAction({ user: createUser?.user }));
         } else {
-            console.log(createUser?.errors[0]);
+            toast.error(createUser?.errors[0].message);
         }
     };
 

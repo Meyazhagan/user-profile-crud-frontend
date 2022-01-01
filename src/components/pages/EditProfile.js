@@ -48,7 +48,7 @@ function CreateProfile() {
             toast.success("Updated Profile");
             dispatch(updateProfileAction({ profile }));
         } else {
-            console.log(updateProfile);
+            toast.error(updateProfile?.errors[0].message);
         }
     };
 

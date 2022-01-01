@@ -25,14 +25,14 @@ function CreateProfile() {
                 profile,
             },
         });
-        toast.success("Profile Created");
 
         if (error) console.log(error);
 
         if (createProfile.ok) {
+            toast.success("Profile Created");
             dispatch(setProfile({ profile: createProfile?.user }));
         } else {
-            console.log(createProfile?.errors[0]);
+            toast.error(createProfile?.errors[0].message);
         }
     };
 
