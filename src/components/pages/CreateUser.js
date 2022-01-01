@@ -1,44 +1,69 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
 import Form from "../common/Form";
 import { validator } from "../../Data/UserValidator";
-import { UserContext } from "../../context/UserContex";
+import { CREATE_USER } from "../../graphql/Mutation";
+import { createUser as createUserAction } from "../../redux/actions";
+import { useDispatch } from "react-redux";
+import gqlFetch from "../../graphql/gqlFetch";
+import { toast } from "react-toastify";
 
 function CreateUser() {
-  const { onCreate } = useContext(UserContext);
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const handleSubmit = (user) => {
-    onCreate(user);
-    navigate("/users");
-  };
+    const dispatch = useDispatch();
 
-  const handleCancel = () => {
-    navigate("/users");
-  };
-  return (
-    <Form
-      onSubmit={handleSubmit}
-      onCancel={handleCancel}
-      validator={validator}
-      initialValue={{
-        avatar: "",
-        name: "",
-        email: "",
-        phone: "",
-        location: "",
-      }}
-      fields={[
-        { label: "Name", field: "name" },
-        { label: "Avatar", field: "avatar" },
-        { label: "Email ID", field: "email" },
-        { label: "Phone No", field: "phone" },
-        { label: "Location", field: "location" },
-      ]}
-      title="Create User"
-      submitText="Create"
-    />
-  );
+    const onCreate = async (user) => {
+        const {
+            data: { createUser },
+            error,
+        } = await gqlFetch({
+            query: CREATE_USER,
+            variables: {
+                user,
+            },
+        });
+        toast.success("User Created");
+
+        if (error) console.log(error);
+
+        if (createUser.ok) {
+            dispatch(createUserAction({ user: createUser?.user }));
+        } else {
+            console.log(createUser?.errors[0]);
+        }
+    };
+
+    const handleSubmit = (user) => {
+        onCreate(user);
+        navigate("/users");
+    };
+
+    const handleCancel = () => {
+        navigate("/users");
+    };
+    return (
+        <Form
+            onSubmit={handleSubmit}
+            onCancel={handleCancel}
+            validator={validator}
+            initialValue={{
+                avatar: "",
+                name: "",
+                email: "",
+                phone: "",
+                location: "",
+            }}
+            fields={[
+                { label: "Name", field: "name" },
+                { label: "Email ID", field: "email" },
+                { label: "Phone No", field: "phone" },
+                { label: "Location", field: "location" },
+            ]}
+            title="Create User"
+            submitText="Create"
+        />
+    );
 }
 
 export default CreateUser;
