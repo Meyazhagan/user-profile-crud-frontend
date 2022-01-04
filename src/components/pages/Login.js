@@ -35,7 +35,7 @@ function Login() {
             }}
             fields={[
                 { label: "Email ID", field: "email" },
-                { label: "Password", field: "password" },
+                { label: "Password", field: "password", type: "password" },
             ]}
             title="Login"
             submitText="Login"

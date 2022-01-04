@@ -32,7 +32,7 @@ function Register() {
             fields={[
                 { label: "Name", field: "name" },
                 { label: "Email ID", field: "email" },
-                { label: "Password", field: "password" },
+                { label: "Password", field: "password", type: "password" },
             ]}
             title="Register"
             submitText="Register"
