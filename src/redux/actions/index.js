@@ -8,3 +8,7 @@ export const deleteUsers = ({ id }) => ({ type: "DELETE_USER", id });
 export const setProfile = ({ profile }) => ({ type: "SET_PROFILE", profile });
 export const updateProfile = ({ profile }) => ({ type: "UPDATE_PROFILE", profile });
 export const deleteProfile = () => ({ type: "DELETE_PROFILE" });
+
+// AUTH Actions
+export const login = ({ token }) => ({ type: "LOGIN", token });
+export const logout = () => ({ type: "LOGOUT" });

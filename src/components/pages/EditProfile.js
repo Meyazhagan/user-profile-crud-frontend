@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
-import { skillOptions, roleOptions, validate } from "../../Data/ProfileServices";
+import { skillOptions, roleOptions, validate } from "../../Services/ProfileServices";
 import { UPDATE_PROFILE } from "../../graphql/Mutation";
 import { GET_PROFILE } from "../../graphql/Query";
 import { setProfile, updateProfile as updateProfileAction } from "../../redux/actions";
@@ -21,7 +21,7 @@ function CreateProfile() {
             data: { getUser },
             error,
         } = await gqlFetch({ query: GET_PROFILE, variables: { userId } });
-        if (error) console.log(error);
+        if (error) return toast.error(error?.data?.error || "An Unexpected Error");
         if (getUser?.ok) {
             dispatch(setProfile({ profile: getUser?.user }));
         } else {
@@ -43,7 +43,8 @@ function CreateProfile() {
             error,
         } = await gqlFetch({ query: UPDATE_PROFILE, variables: { userId, profile } });
 
-        if (error) console.log(error);
+        if (error) return toast.error(error?.data?.error || "An Unexpected Error");
+
         if (updateProfile?.ok) {
             toast.success("Updated Profile");
             dispatch(updateProfileAction({ profile }));

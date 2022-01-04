@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Form from "../common/Form";
-import { validator } from "../../Data/UserValidator";
+import { validator } from "../../Services/UserValidator";
 import gqlFetch from "../../graphql/gqlFetch";
 import { GET_USER } from "../../graphql/Query";
 import { UPDATE_USER } from "../../graphql/Mutation";
@@ -21,7 +21,7 @@ function EditUser() {
             data: { getUser },
             error,
         } = await gqlFetch({ query: GET_USER, variables: { id } });
-        if (error) console.log(error);
+        if (error) return toast.error(error?.data?.error || "An Unexpected Error");
         if (getUser?.ok) {
             setInitialValue(getUser?.user);
         } else {
@@ -43,7 +43,7 @@ function EditUser() {
             error,
         } = await gqlFetch({ query: UPDATE_USER, variables: { id, user } });
 
-        if (error) console.log(error);
+        if (error) return toast.error(error?.data?.error || "An Unexpected Error");
         if (updateUser?.ok) {
             toast.success("Updated User");
             dispatch(updateUsers({ id, user }));

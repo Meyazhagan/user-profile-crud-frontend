@@ -1,9 +1,9 @@
-import axios from "axios";
+import http from "../apis/http";
 
 const gqlFetch = async ({ query, variables }) => {
     try {
-        const { data } = await axios({
-            url: process.env.REACT_APP_BACKEND_URL,
+        const { data } = await http({
+            url: "/graphql",
             method: "POST",
             data: {
                 query,
@@ -12,7 +12,7 @@ const gqlFetch = async ({ query, variables }) => {
         }).then(({ data }) => data);
         return { data, error: null };
     } catch (err) {
-        return { data: null, error: err?.response };
+        return { data: {}, error: err?.response };
     }
 };
 

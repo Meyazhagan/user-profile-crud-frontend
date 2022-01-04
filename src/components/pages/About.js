@@ -1,5 +1,5 @@
 import React from "react";
-import { skillOptions } from "../../Data/ProfileServices";
+import { skillOptions } from "../../Services/ProfileServices";
 // import styled from "styled-components"
 
 const GithubButton = (

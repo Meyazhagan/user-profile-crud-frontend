@@ -3,7 +3,17 @@ import React, { useEffect, useState } from "react";
 import ImageInput from "./ImageInput";
 
 function Form(props) {
-    const { initialValue, fields = [], title, validator, submitText, onSubmit, onCancel } = props;
+    const {
+        initialValue,
+        fields = [],
+        title,
+        validator,
+        submitText,
+        secondaryText,
+        onSubmit,
+        onCancel,
+        hideAvatar,
+    } = props;
 
     const [value, setValue] = useState(initialValue);
     const [errors, setErrors] = useState({});
@@ -38,13 +48,15 @@ function Form(props) {
     return (
         <form className="grid grid-cols-8 bg-alpha p-4 rounded-md max-w-max mx-auto items-center gap-4">
             <div className="col-span-full text-center mb-4">{title}</div>
-            <ImageInput
-                name="avatar"
-                id="avatar"
-                label="Avatar"
-                value={value["avatar"]}
-                handleValueChange={handleValueChange}
-            />
+            {!hideAvatar && (
+                <ImageInput
+                    name="avatar"
+                    id="avatar"
+                    label="Avatar"
+                    value={value["avatar"]}
+                    handleValueChange={handleValueChange}
+                />
+            )}
             {fields.map(({ field, label, ...rest }, index) => (
                 <React.Fragment key={index}>
                     <label htmlFor={field} className="col-span-3">
@@ -90,7 +102,7 @@ function Form(props) {
                         rounded-md px-4 py-1
                         hover:border-red-500
                         focus:border-red-500 focus:outline-none">
-                        Cancel
+                        {secondaryText || "Cancel"}
                     </button>
                 </div>
             </div>

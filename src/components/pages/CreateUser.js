@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import Form from "../common/Form";
-import { validator } from "../../Data/UserValidator";
+import { validator } from "../../Services/UserValidator";
 import { CREATE_USER } from "../../graphql/Mutation";
 import { createUser as createUserAction } from "../../redux/actions";
 import { useDispatch } from "react-redux";
@@ -24,7 +24,7 @@ function CreateUser() {
             },
         });
 
-        if (error) console.log(error);
+        if (error) return toast.error(error?.data?.error || "An Unexpected Error");
 
         if (createUser.ok) {
             toast.success("User Created");

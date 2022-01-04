@@ -21,9 +21,8 @@ function Profiles() {
             data: { getUser },
             error,
         } = await gqlFetch({ query: GET_PROFILE, variables: { userId } });
-        if (error) console.log(error);
+        if (error) return toast.error(error?.data?.error || "An Unexpected Error");
         if (getUser?.ok) {
-            console.log(getUser?.user);
             dispatch(setProfile({ profile: getUser?.user }));
         } else {
             console.log(getUser);
@@ -43,7 +42,7 @@ function Profiles() {
             data: { deleteProfile },
             error,
         } = await gqlFetch({ query: DELETE_PROFILE, variables: { userId } });
-        if (error) console.log(error);
+        if (error) return toast.error(error?.data?.error || "An Unexpected Error");
         if (deleteProfile?.ok) {
             toast.info("Profile Deleted");
             dispatch(deleteProfileAction());

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router";
-import { skillOptions, roleOptions, validate } from "../../Data/ProfileServices";
+import { skillOptions, roleOptions, validate } from "../../Services/ProfileServices";
 import gqlFetch from "../../graphql/gqlFetch";
 import SelectForm from "../common/SelectForm";
 import { CREATE_PROFILE } from "../../graphql/Mutation";
@@ -26,7 +26,7 @@ function CreateProfile() {
             },
         });
 
-        if (error) console.log(error);
+        if (error) return toast.error(error?.data?.error || "An Unexpected Error");
 
         if (createProfile.ok) {
             toast.success("Profile Created");

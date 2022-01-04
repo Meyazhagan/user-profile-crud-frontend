@@ -22,7 +22,7 @@ function Users() {
             data: { deleteUser },
             error,
         } = await gqlFetch({ query: DELETE_USER, variables: { id } });
-        if (error) console.log(error);
+        if (error) return toast.error(error?.data?.error || "An Unexpected Error");
         if (deleteUser?.ok) {
             toast.info("User Deleted");
             dispatch(deleteUserAction({ id }));
@@ -36,7 +36,7 @@ function Users() {
             data: { initUser },
             error,
         } = await gqlFetch({ query: INIT_USER });
-        if (error) console.log(error);
+        if (error) return toast.error(error?.data?.error || "An Unexpected Error");
         if (initUser?.ok) {
             toast.info("Users Generated");
             dispatch(setUsers({ users: initUser?.users }));
